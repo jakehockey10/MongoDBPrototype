@@ -1,0 +1,16 @@
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\bin\Debug\MongoDBPrototype.exe.config
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\obj\Debug\MongoDBPrototype.csprojResolveAssemblyReference.cache
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\obj\Debug\MongoDBPrototype.Properties.Resources.resources
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\obj\Debug\MongoDBPrototype.csproj.GenerateResource.Cache
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\bin\Debug\MongoDBPrototype.exe
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\bin\Debug\MongoDBPrototype.pdb
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\bin\Debug\MongoDB.Bson.dll
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\bin\Debug\MongoDB.Driver.Core.dll
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\bin\Debug\MongoDB.Driver.dll
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\bin\Debug\nunit.framework.dll
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\bin\Debug\MongoDB.Bson.xml
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\bin\Debug\MongoDB.Driver.xml
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\bin\Debug\nunit.framework.xml
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\obj\Debug\MongoDBPrototype.exe
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\obj\Debug\MongoDBPrototype.pdb
+c:\users\jakeh\documents\visual studio 2015\Projects\MongoDBPrototype\MongoDBPrototype\obj\Debug\MongoDBPrototype.Form1.resources
