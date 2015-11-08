@@ -68,5 +68,14 @@ namespace MongoDBPrototype.Properties {
                 return ResourceManager.GetString("EventViewerReader_Thing_Error_while_reading_the_event_logs", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to working....
+        /// </summary>
+        internal static string Form1_CountRestaurants_working___ {
+            get {
+                return ResourceManager.GetString("Form1_CountRestaurants_working___", resourceCulture);
+            }
+        }
     }
 }

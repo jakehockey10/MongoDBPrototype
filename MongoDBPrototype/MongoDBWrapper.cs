@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MongoDB.Bson;
@@ -143,7 +142,6 @@ namespace MongoDBPrototype
         {
             IMongoCollection<BsonDocument> collection = GetRestaurants();
             FilterDefinition<BsonDocument> filter = Builders<BsonDocument>.Filter.Eq("restaurant_id", "41156888");
-            //UpdateDefinition<BsonDocument> update = Builders<BsonDocument>.Update.Set("address.street", "East 31st Street");
             UpdateDefinition<BsonDocument> update = Builders<BsonDocument>.Update.Set("address.street",
                 Guid.NewGuid().ToString());
             return await collection.UpdateOneAsync(filter, update);
@@ -195,7 +193,7 @@ namespace MongoDBPrototype
 
         public async Task<List<BsonDocument>> FilterAndGroupDocuments()
         {
-            IMongoCollection<BsonDocument> collection = Database.GetCollection<BsonDocument>("restaurants");
+            IMongoCollection<BsonDocument> collection = GetRestaurants();
             IAggregateFluent<BsonDocument> aggregate = collection.Aggregate()
                 .Match(new BsonDocument {{"borough", "Queens"}, {"cuisine", "Brazilian"}})
                 .Group(new BsonDocument {{"_id", "$address.zipcode"}, {"count", new BsonDocument("$sum", 1)}});
@@ -204,7 +202,7 @@ namespace MongoDBPrototype
 
         public async Task<string> CreateASingleFieldIndex()
         {
-            IMongoCollection<BsonDocument> collection = Database.GetCollection<BsonDocument>("restaurants");
+            IMongoCollection<BsonDocument> collection = GetRestaurants();
             IndexKeysDefinition<BsonDocument> keys = Builders<BsonDocument>.IndexKeys.Ascending("cuisine");
             return await collection.Indexes.CreateOneAsync(keys);
         }
@@ -217,9 +215,28 @@ namespace MongoDBPrototype
             return await collection.Indexes.CreateOneAsync(keys);
         }
 
-        public async Task DropACollection()
+        public async Task CreateCollection(string name)
         {
-            await Database.DropCollectionAsync("restaurants");
+            await Database.CreateCollectionAsync(name);
+        }
+
+        public static async Task<bool> CollectionExists(string collectionName)
+        {
+            var filter = new BsonDocument("name", collectionName);
+            //filter by collection name
+            IAsyncCursor<BsonDocument> collections = await Database.ListCollectionsAsync(new ListCollectionsOptions { Filter = filter });
+            //check for existence
+            return (await collections.ToListAsync()).Any();
+        }
+
+        public async Task DropRestaurantsCollection()
+        {
+            await DropCollection("restaurants");
+        }
+
+        public async Task DropCollection(string name)
+        {
+            await Database.DropCollectionAsync(name);
         }
 
         public async Task<IAsyncCursor<BsonDocument>> ListCollectionsAsync()
@@ -256,8 +273,7 @@ namespace MongoDBPrototype
 
         public void StartServer()
         {
-            var process = new Process {StartInfo = {FileName = ServerExecutable}};
-            bool start = process.Start();
+            ProcessStarter.StartProcess(ServerExecutable);
             Thread.Sleep(1000);
         }
 
@@ -272,43 +288,27 @@ namespace MongoDBPrototype
             return await GetRestaurants().Indexes.ListAsync();
         }
 
-        /// <summary>
-        ///     Download a file from a url.
-        /// </summary>
-        /// <param name="urlString">URL of file as a string</param>
-        /// <param name="destinationFullName">Full path to where this file will go.</param>
-        public static void DownloadFile(string urlString, string destinationFullName)
-        {
-            var webClient = new WebClient();
-            webClient.DownloadFile(urlString, destinationFullName);
-        }
-
         public void LoadDataset()
         {
-            var process = new Process
-            {
-                StartInfo =
-                {
-                    FileName = MongoImportExecutable,
-                    Arguments = MongoImportArguments
-                }
-            };
-            process.Start();
-            process.WaitForExit();
+            ProcessStarter.StartProcessAndWaitForExit(MongoImportExecutable, MongoImportArguments);
         }
 
         #endregion
 
         #region Private Methods
 
-        private static IMongoCollection<T> GetCollection<T>(string name)
-        {
-            return Database.GetCollection<T>(name);
-        }
-
         private static IMongoCollection<BsonDocument> GetRestaurants()
         {
             return GetCollection<BsonDocument>("restaurants");
+        }
+
+        #endregion
+
+        #region Internal Methods
+        
+        internal static IMongoCollection<T> GetCollection<T>(string name)
+        {
+            return Database.GetCollection<T>(name);
         }
 
         #endregion
